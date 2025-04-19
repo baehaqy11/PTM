@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clan Kami</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: #0b0b0b;
+      color: #fff;
+    }
+    header {
+      background: linear-gradient(to right, #8b0000, #ff0000);
+      padding: 40px 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 3em;
+      color: #fff;
+      text-shadow: 0 0 10px #000;
+    }
+    header p {
+      font-size: 1.2em;
+      color: #f5c6c6;
+    }
+
+    section {
+      padding: 30px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .card {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      box-shadow: 0 0 12px rgba(255, 0, 0, 0.4);
+      border-left: 5px solid #ff0000;
+    }
+    .card h2 {
+      color: #ff0000;
+      margin-top: 0;
+    }
+
+    .anggota {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .anggota .item {
+      background: #2a0000;
+      flex: 1 1 200px;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      border: 1px solid #600000;
+      transition: transform 0.2s ease;
+      color: #ffdada;
+    }
+    .anggota .item:hover {
+      transform: scale(1.05);
+      background: #400000;
+    }
+
+    .lihat-foto-btn {
+      margin-top: 10px;
+      padding: 8px 15px;
+      background: crimson;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .lihat-foto-btn:hover {
+      background: #c00000;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      text-align: center;
+      padding-top: 100px;
+    }
+
+    .modal.show {
+      display: block !important;
+      opacity: 1;
+    }
+
+    .modal-content {
+      max-width: 90%;
+      max-height: 70vh;
+      border: 4px solid crimson;
+      border-radius: 10px;
+      animation: zoomIn 0.4s ease;
+    }
+
+    #fotoCaption {
+      text-align: center;
+      color: #ccc;
+      margin-top: 10px;
+      font-size: 1em;
+    }
+
+    @keyframes zoomIn {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .close {
+      position: absolute;
+      top: 60px;
+      right: 35px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .nav-buttons {
+      margin-top: 20px;
+    }
+
+    .nav-buttons button {
+      background: crimson;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-family: inherit;
+      cursor: pointer;
+      margin: 0 10px;
+    }
+
+    .nav-buttons button:hover {
+      background: #a00000;
+    }
+
+    a {
+      color: #ff4d4d;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #111;
+      border-top: 1px solid #333;
+      color: #888;
+    }
+  </style>
+<header>
+  <img src="https://via.placeholder.com/100x100?text=Logo" alt="Logo Clan" style="width:100px; height:100px; border-radius:50%; box-shadow:0 0 10px red; margin-bottom: 10px;">
+  <h1>Clan Kami</h1>
+  <p>Kami berdiri dengan semangat, darah, dan kemenangan!</p>
+</header>
+
+<section class="card">
+  <h2>Anggota Clan</h2>
+  <div class="anggota">
+    <div class="item">
+      <strong>Leader</strong><br/>Kamu<br/>
+      <button class="lihat-foto-btn" onclick="bukaModal('https://via.placeholder.com/300x400?text=Leader')">Lihat Foto</button>
+    </div>
+    <div class="item">
+      <strong>Co-Leader</strong><br/>Teman 1<br/>
+      <button class="lihat-foto-btn" onclick="bukaModal('https://via.placeholder.com/300x400?text=Co-Leader')">Lihat Foto</button>
+    </div>
+    <div class="item">
+      <strong>Member</strong><br/>Teman 2<br/>
+      <button class="lihat-foto-btn" onclick="bukaModal('https://via.placeholder.com/300x400?text=Member+1')">Lihat Foto</button>
+    </div>
+    <div class="item">
+      <strong>Member</strong><br/>Teman 3<br/>
+      <button class="lihat-foto-btn" onclick="bukaModal('https://via.placeholder.com/300x400?text=Member+2')">Lihat Foto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Modal Foto -->
+<div id="fotoModal" class="modal">
+  <span class="close" onclick="tutupModal()">&times;</span>
+  <img class="modal-content" id="fotoPreview">
+  <div id="fotoCaption"></div>
+  <div id="fotoTiktok">
+    <a id="tiktokLink" href="#" target="_blank">TikTok</a>
+  </div>
+  <div class="nav-buttons">
+    <button onclick="prevFoto()">Previous</button>
+    <button onclick="nextFoto()">Next</button>
+  </div>
+</div>
+  </section>
+
+  <section class="card">
+    <h2>Jadwal & Event</h2>
+    <ul>
+      <li>Sabtu, 19.00 WIB - War Clan Mingguan</li>
+      <li>Minggu, 20.00 WIB - Sparring Santai</li>
+      <li>Event Spesial: Tournament Internal (Setiap Akhir Bulan)</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Kontak & Sosial Media</h2>
+    <p>Instagram: <a href="https://instagram.com/clankamu" target="_blank">@clankamu</a></p>
+    <p>WhatsApp: <a href="https://wa.me/6281234567890" target="_blank">Hubungi Admin</a></p>
+    <p>Discord: <a href="#">Link Server</a></p>
+  </section>
+
+<footer>
+  &copy; 2025 Clan Kamu. All rights reserved.
+</footer>
+
+<script>
+const anggotaClan = [
+  {
+    foto: 'https://via.placeholder.com/300x400?text=Leader',
+    caption: 'Ini adalah Leader kami yang hebat',
+    tiktok: 'https://www.tiktok.com/@leaderkamu'
+  },
+  {
+    foto: 'https://via.placeholder.com/300x400?text=Co-Leader',
+    caption: 'Co-Leader yang selalu setia dan siap perang',
+    tiktok: 'https://www.tiktok.com/@co_leader'
+  },
+  {
+    foto: 'https://via.placeholder.com/300x400?text=Member+1',
+    caption: 'Pejuang muda penuh semangat',
+    tiktok: 'https://www.tiktok.com/@member1'
+  },
+  {
+    foto: 'https://via.placeholder.com/300x400?text=Member+2',
+    caption: 'Strategi jenius dalam setiap war',
+    tiktok: 'https://www.tiktok.com/@member2'
+  },
+];
+
+let fotoIndex = 0;
+
+function tampilkanFoto(index) {
+  const data = anggotaClan[index];
+  if (data) {
+    document.getElementById('fotoPreview').src = data.foto;
+    document.getElementById('fotoCaption').textContent = data.caption;
+    document.getElementById('tiktokLink').href = data.tiktok;
+    document.getElementById('fotoModal').classList.add('show');
+  }
+}
+
+function bukaModal(src) {
+  fotoIndex = anggotaClan.findIndex(item => item.foto === src);
+  if (fotoIndex === -1) fotoIndex = 0;
+  tampilkanFoto(fotoIndex);
+}
+
+function nextFoto() {
+  fotoIndex = (fotoIndex + 1) % anggotaClan.length;
+  tampilkanFoto(fotoIndex);
+}
+
+function prevFoto() {
+  fotoIndex = (fotoIndex - 1 + anggotaClan.length) % anggotaClan.length;
+  tampilkanFoto(fotoIndex);
+}
+
+function tutupModal() {
+  document.getElementById('fotoModal').classList.remove('show');
+}
+</script>
+
+</body>
+</html>
